@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} Product Page {% endblock %}
+
+{% block content %}
+
+
+    <div class="flex justify-between mb-4">
+        <h2>Product List</h2>
+        <form action="{% url 'add-product' %}">
+
+            <button class="p-2 px-4 bg-green-600 rounded-sm text-white">Add New</button>
+        </form>
+    
+    </div>
+    <div>
+        
+            {%for product in products %}
+            
+                <div class="bg-white border-2 drop-shadow-sm mb-4 p-4 flex justify-between">
+                    <div>
+                        <p> {{product.name}}</p>
+                        <p>old price is - {{product.old_price}}</p>
+                        <p>new price is - 0</p>
+                    </div>
+    
+                    <button class="p-1 px-6 rounded bg-yellow-500 text-white self-end">Edit</button>
+                </div>
+    
+               
+            
+            {% endfor %}
+    
+       
+    </div>
+
+
+
+{% endblock %}
