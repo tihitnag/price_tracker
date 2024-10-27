@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Product {% endblock %}
+{% block content %}
+<h1>Add product page</h1>
+<form method="post" class="p-4">
+    {% csrf_token %}
+    {{form.as_p}}
+
+<button class="p-2 px-4 bg-green-600 rounded-sm text-white" type="submit">Save</button>
+</form>
+
+{% endblock %}

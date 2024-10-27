@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Django App{% endblock %}</title>
+    {% load static %}
+    
+    <link href="{% static 'css/output.css' %}" rel="stylesheet">
+</head>
+<body class="font-sans bg-gray-100 text-gray-800">
+
+    <!-- Navbar -->
+    <div class="bg-gray-800 p-6 text-white">
+        <h1 class="text-xl">
+            <a href="{% url 'product-list' %}" class="hover:underline">My Product App</a>
+        </h1>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-6 bg-white h-screen">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center p-4 mt-8 bg-gray-800 text-white">
+        &copy; 2023 My Django Project
+    </div>
+    
+</body>
+</html>
