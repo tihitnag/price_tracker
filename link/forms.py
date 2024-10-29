@@ -8,5 +8,5 @@ from .models import links_model
 
 class link_forms(forms.ModelForm):
     class Meta:
-        models = links_model  # Use 'model' instead of 'models'
-        fields = ('url',)  # Ensure this field exists in your model
+        model = links_model  # Use 'model' instead of 'models'
+        fields = ['url',]  # Ensure this field exists in your model
