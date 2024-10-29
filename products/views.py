@@ -4,6 +4,11 @@ from django.views.generic import ListView , CreateView
 
 from .models import Product
 from .forms import ProductForm
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("Welcome to the Price Tracker App!")
+
 
 # Create your views here.
 class ProductListView(ListView):
