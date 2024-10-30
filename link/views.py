@@ -31,8 +31,10 @@ def home_view(request):
 
     # Check for discounts
     for item in qs:
-        if item.old_price > item.current_price:
-            discount_list.append(item)
+        if item.old_price !=None and item.current_price !=None:
+            
+            if item.old_price > item.current_price:
+                discount_list.append(item)
     no_discount = len(discount_list)  # Count of items with discounts
 
     context = {
