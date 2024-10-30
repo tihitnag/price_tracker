@@ -20,6 +20,20 @@
                     <div>Difference: {{ item.diffrence }}</div>
                     <div>Link: <a href="{{ item.url }}" target="_blank">{{ item.url }}</a></div>
                 </div>
+                <div>
+                    <!-- Edit Button -->
+                    <button type="button" class="btn btn-primary btn-sm">
+                        <i class="bi bi-pencil"></i> Edit
+                    </button>
+
+                    <!-- Delete Button -->
+                    <form action="{% url 'delete-link' item.pk %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="button" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> Delete
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     {% endfor %}
