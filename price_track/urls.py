@@ -16,10 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path , include
-from link.views import home_view
-
+from link.views import home_view , link_delete_view
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("products/",include("products.urls")),
     path("",home_view,name="home"),
+    path('<int:pk>/delete/', link_delete_view, name='delete-link'),
 ]

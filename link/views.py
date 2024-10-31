@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 from .forms import link_forms
 from .models import links_model
 
@@ -25,7 +26,7 @@ def home_view(request):
             error = 'Something went wrong'
 
     # Query set: grab all items from links_model
-    qs = links_model.objects.all()
+    qs = links_model.get_all()
     no_items = qs.count()
     discount_list = []  # Initialize discount list
 
@@ -46,3 +47,14 @@ def home_view(request):
     }
 
     return render(request, "links/main.html", context)
+def link_delete_view(request, pk):
+    # Retrieve the link object or return a 404 if not found
+    product = get_object_or_404(links_model, pk=pk)
+    
+    if request.method == 'POST':
+        # Delete the link and redirect to the link list page
+        product.delete()
+        return redirect(reverse_lazy('home'))
+
+    # If a GET request is made, redirect back to the link list
+    return redirect(reverse_lazy('home'))

@@ -16,8 +16,8 @@ class links_model(models.Model):
         name,price=get_link(self.url)
         self.name = name if name else "Unknown Product"
         self.price = price if price is not None else 0.0
-        self.current_price = self.price
         old_price=self.current_price
+        self.current_price = self.price
         if self.current_price:
             if price!=old_price:
                 diff=old_price-price
@@ -28,4 +28,32 @@ class links_model(models.Model):
         self.name=name
         self.curent_date=price
         super().save(*args, **kwargs)
+        
+    @classmethod
+    def get_all(cls):
+        # This custom method retrieves and updates the latest prices for each link
+        all_links = cls.objects.all()
+        for link in all_links:
+            name, price = get_link(link.url)
+            old_price = link.current_price
+            print("#$#%$%$%#$$#$#$%%%$%$%R$%$")
+            print(f"Product Name: {name}")
+            print(f"Price: {price}")
+            print(f"Current Price (before update): {link.current_price}")
+
+            # Set the product properties with improved checks
+            link.name = name if name else "Unknown Product"
+            link.price = price if price is not None else 0.0
+            link.old_price = old_price
+            link.current_price = link.price  # Set current_price to updated price
+
+            # Calculate the difference if old_price and current_price are valid
+            link.diffrence = (link.old_price - link.current_price) if link.old_price is not None and link.current_price is not None and link.old_price != link.current_price else 0.0
+            print(f"Difference: {link.diffrence}")
+
+            # Save the link only if there's a change in the price
+            if old_price != link.current_price:
+                link.save(update_fields=['name', 'price', 'old_price', 'current_price', 'diffrence'])
+
+        return all_links
             
