@@ -10,21 +10,21 @@ class links_model(models.Model):
     curent_date = models.DateField(auto_now=True)
     url = models.URLField()   
     def __str__(self):
-        return super().__str__()
-    
+        return str(self.name)
+    class Meta:
+        ordering=('diffrence','-curent_date')
     def save(self, *args, **kwargs):
         name,price=get_link(self.url)
-        self.name = name if name else "Unknown Product"
-        self.price = price if price is not None else 0.0
         old_price=self.current_price
         self.current_price = self.price
         if self.current_price:
             if price!=old_price:
-                diff=old_price-price
+                diff=price- old_price
                 self.diffrence=diff
                 self.old_price=old_price
             else:
-                self.current_price=0
+                self.old_price=0
+                self.diffrence=0
         self.name=name
         self.curent_date=price
         super().save(*args, **kwargs)
