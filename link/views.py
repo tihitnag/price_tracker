@@ -49,11 +49,12 @@ def home_view(request):
     return render(request, "links/main.html", context)
 def link_delete_view(request, pk):
     # Retrieve the link object or return a 404 if not found
-    product = get_object_or_404(links_model, pk=pk)
+    print("we are here...............")
+    link = get_object_or_404(links_model, pk=pk)
     
     if request.method == 'POST':
         # Delete the link and redirect to the link list page
-        product.delete()
+        link.delete()
         return redirect(reverse_lazy('home'))
 
     # If a GET request is made, redirect back to the link list
