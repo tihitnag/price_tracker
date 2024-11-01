@@ -10,7 +10,7 @@ def get_link(url):
             'DNT': '1',  # Do Not Track
             'Connection': 'keep-alive'
         }
-
+        print("**************************************8")
 
         response = requests.get(url, headers=headers)
 
@@ -30,6 +30,12 @@ def get_link(url):
             print("Product Price:", price.get_text(strip=True))
         else:
             print("Product price not found.")
+          # Locate the image tag by its id
+        image_tag = soup.select_one("#landingImage")
+        if image_tag and "src" in image_tag.attrs:
+            # Get the 'src' attribute which contains the image URL
+            image_url = image_tag["src"]
+            print("#################Image URL:", image_url)
         return name,price
 print(get_link(url))
         

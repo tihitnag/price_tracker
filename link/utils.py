@@ -1,3 +1,4 @@
+import re
 from bs4 import BeautifulSoup
 import requests
 
@@ -12,7 +13,7 @@ def get_link(url):
         }
 
 
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=headers, verify=False)
 
         # Parse HTML content
         soup = BeautifulSoup(response.text, 'lxml')
@@ -23,16 +24,29 @@ def get_link(url):
         name=name.get_text(strip=True) if name else None
 
         # Attempt to select the product price
-        price = soup.select_one('.a-price .a-offscreen')
+        # price = soup.select_one('.a-price .a-offscreen')
+        price = soup.find("span", {"class": "a-price-whole"})
+    
+        
+           
+            
+          # Locate the image tag by its id
+        image_tag = soup.select_one("#landingImage")
+        image_url =''
+        if image_tag and "src" in image_tag.attrs:
+            # Get the 'src' attribute which contains the image URL
+            image_url = image_tag["src"]
+            print("#################Image URL:", image_url)
         if price:
             
-            price_text= price.get_text(strip=True).replace(',','.')
+            price_text= price.get_text(strip=True).replace(" ", "").replace(',','.')
+            price_text = re.sub(r"\s+", "", price_text)
             try:
                 price = float(price_text.replace('zł', '').strip())
             except ValueError:
                  price=None
         else:
             price=None
-        return name,price
+        return name,price,image_url
 
         
