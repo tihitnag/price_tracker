@@ -11,8 +11,9 @@ class links_model(models.Model):
     url = models.URLField()   
     image_url = models.URLField(null=True,blank=True)
     def __str__(self):
-        return super().__str__()
-    
+        return str(self.name)
+    class Meta:
+        ordering=('diffrence','-curent_date')
     def save(self, *args, **kwargs):
        # Fetch name and price using the get_link method
         name, price,image_url = get_link(self.url)
